@@ -1,4 +1,5 @@
 "use client";
+import { showToast } from "@/components/toasts/Toasts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -50,6 +51,7 @@ const page = () => {
   // Onsubmit event
   const onSubmit = (data: FormData) => {
     console.log(data);
+    showToast({ status: "success", message: "Data saved" });
   };
 
   return (

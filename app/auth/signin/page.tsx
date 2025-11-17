@@ -1,46 +1,7 @@
 "use client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
-import { useForm } from "react-hook-form";
-import z from "zod";
-
-// ZOD form validation schema
-const SignInFormSchema = z.object({
-  email: z.email("Invalid email address"),
-  password: z
-    .string()
-    .min(6, "Password must be atleast 6 characters long")
-    .regex(
-      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-      "Password must contains atleast one letter and one number"
-    ),
-});
-
-interface FormData {
-  email: string;
-  password: string;
-}
+import SignInForm from "@/components/auth/SignInForm";
 
 const page = () => {
-  // Useform from react-hook-form
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm<FormData>({
-    resolver: zodResolver(SignInFormSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  // Onsubmit event
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-  };
-
   return (
     // Main section for signup page
     <section className="container mx-auto p-2">
@@ -57,72 +18,7 @@ const page = () => {
               Lets create your new account and get started
             </p>
           </div>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col space-y-3 w-full sm:w-3/4 md:w-2/6 lg:w-1/3 transition-all duration-300 transform"
-          >
-            <div className="flex flex-col items-start">
-              <label htmlFor="email" className="text-sm">
-                Email*
-              </label>
-              <input
-                {...register("email", { required: true })}
-                type="email"
-                placeholder="email"
-                className="w-full px-2 py-1 md:p-2 border-2 border-gray-300/60 rounded-md focus:outline-blue-500 placeholder:text-sm"
-              />
-              <p
-                className={`text-sm p-1 text-red-600 transition-all duration-300 transform ${
-                  errors.email
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 -translate-y-1"
-                }`}
-              >
-                {errors.email?.message}
-              </p>
-            </div>
-            <div className="flex flex-col items-start">
-              <label htmlFor="password" className="text-sm">
-                Password*
-              </label>
-              <input
-                {...register("password", { required: true })}
-                type="password"
-                placeholder="password"
-                className="w-full px-2 py-1 md:p-2 border-2 border-gray-300/60 rounded-md focus:outline-blue-500 placeholder:text-sm"
-              />
-              <p
-                className={`text-sm p-1 text-red-600 transition-all duration-300 transform ${
-                  errors.password
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 -translate-y-1"
-                }`}
-              >
-                {errors.password?.message}
-              </p>
-            </div>
-            <button
-              disabled={!isValid}
-              className={`group flex items-center text-center justify-center gap-2 w-full p-3 bg-black text-white rounded-sm ${
-                !isValid ? "opacity-50" : ""
-              }`}
-            >
-              Create account{" "}
-              <ArrowRight
-                size={18}
-                className="transition-all duration-300 opacity-0 group-hover:opacity-100"
-              />
-            </button>
-            <div className="text-sm flex items-center justify-center space-x-2 mt-4">
-              <p className="text-gray-400">I dont have an account?</p>
-              <Link
-                href="/auth/signup"
-                className="font-semibold tracking-tighter opacity-50 hover:opacity-100 transition-all  duration-300"
-              >
-                Sign Up
-              </Link>
-            </div>
-          </form>
+          <SignInForm />
         </div>
       </div>
     </section>

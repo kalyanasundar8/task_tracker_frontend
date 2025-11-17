@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-// ZOD form validation schema
+// SIGN UP:  ZOD form validation schema
 export const SignUpFormSchema = z.object({
   username: z.string().min(3, "Username must be atleast 3 characters long"),
   email: z.email("Invalid email address"),
@@ -17,3 +17,16 @@ export const SignUpFormSchema = z.object({
 //   message: "Password do not match",
 //   path: ["confirmpassword"],
 // });
+
+
+// SIGN IN: ZOD form validation schema
+export const SignInFormSchema = z.object({
+  email: z.email("Invalid email address"),
+  password: z
+    .string()
+    .min(6, "Password must be atleast 6 characters long")
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/,
+      "Password must contains atleast one letter and one number"
+    ),
+});

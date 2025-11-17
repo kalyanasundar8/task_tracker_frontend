@@ -9,7 +9,7 @@ export const showToast = ({ status, message }: Props) => {
     console.log("Toaster")
   if (status === "success") {
     toast.success(message);
-  } else {
+  } else if(status === "error"){
     toast.error(message);
   }
 };
